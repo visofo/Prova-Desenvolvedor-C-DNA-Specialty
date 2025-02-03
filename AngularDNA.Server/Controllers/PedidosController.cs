@@ -50,7 +50,7 @@ public class PedidosController : ControllerBase
                 ItensPedido = new List<ItemPedido>()
             };
             decimal total = 0;
-            foreach (var itemInput in pedidoInput.Itens)
+            foreach (var itemInput in pedidoInput.itensPedido)
             {
                 var produto = await _context.Produtos.FindAsync(itemInput.ProdutoId);
                 if (produto == null)
@@ -93,12 +93,17 @@ public class PedidosController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize]
+    //[Authorize]
     public async Task<ActionResult<List<Pedido>>> Get()
     {
         try
         {
-            var lista = await _context.Pedidos.Include(x => x.Usuario).Include(x => x.Cliente).Include(x => x.ItensPedido).ToListAsync();
+            var lista = await _context.Pedidos
+                .Include(x => x.Usuario)
+                .Include(x => x.Cliente)
+                .Include(x => x.ItensPedido)
+                    .ThenInclude(i => i.Produto)
+                .ToListAsync();
             return Ok(lista);
         }
         catch (Exception ex)
@@ -139,13 +144,15 @@ public class PedidosController : ControllerBase
                 return BadRequest("Cliente inválido.");
             }
 
-            var usuarioId = int.Parse(User.FindFirst(ClaimTypes.Name)?.Value);
+            var usuarioId = 1;
+            //var usuarioId = int.Parse(User.FindFirst(ClaimTypes.Name)?.Value);
 
-            var usuario = await _context.Usuarios.FindAsync(usuarioId);
-            if (usuario == null)
-            {
-                return BadRequest("Usuário inválido.");
-            }
+            //var usuario = await _context.Usuarios.FindAsync(usuarioId);
+            //if (usuario == null)
+            //{
+            //    return BadRequest("Usuário inválido.");
+            //}
+
             var pedido = new Pedido
             {
                 ClienteId = pedidoInput.ClienteId,
@@ -154,7 +161,7 @@ public class PedidosController : ControllerBase
                 ItensPedido = new List<ItemPedido>()
             };
             decimal total = 0;
-            foreach (var itemInput in pedidoInput.Itens)
+            foreach (var itemInput in pedidoInput.itensPedido)
             {
                 var produto = await _context.Produtos.FindAsync(itemInput.ProdutoId);
                 if (produto == null)
@@ -204,19 +211,22 @@ public class PedidosController : ControllerBase
                 return BadRequest("Cliente inválido.");
             }
 
-            var usuarioId = int.Parse(User.FindFirst(ClaimTypes.Name)?.Value);
+            var usuarioId = 1;
+            //var usuarioId = int.Parse(User.FindFirst(ClaimTypes.Name)?.Value);
 
-            var usuario = await _context.Usuarios.FindAsync(usuarioId);
-            if (usuario == null)
-            {
-                return BadRequest("Usuário inválido.");
-            }
+            //var usuario = await _context.Usuarios.FindAsync(usuarioId);
+            //if (usuario == null)
+            //{
+            //    return BadRequest("Usuário inválido.");
+            //}
+
             pedido.ClienteId = pedidoInput.ClienteId;
             pedido.UsuarioId = usuarioId;
             pedido.DataPedido = DateTime.Now;
             decimal total = 0;
             pedido.ItensPedido.Clear();
-            foreach (var itemInput in pedidoInput.Itens)
+
+            foreach (var itemInput in pedidoInput.itensPedido)
             {
                 var produto = await _context.Produtos.FindAsync(itemInput.ProdutoId);
                 if (produto == null)
@@ -290,7 +300,7 @@ public class PedidoInputModel
 {
     public int Id { get; set; }
     public int ClienteId { get; set; }
-    public List<ItemInputModel> Itens { get; set; }
+    public List<ItemInputModel> itensPedido { get; set; }
 }
 public class ItemInputModel
 {
