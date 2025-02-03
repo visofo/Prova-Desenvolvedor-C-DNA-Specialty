@@ -33,7 +33,7 @@ import { AuthService } from '../service/auth.service';
                                 </div>
                                 <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span>
                             </div>
-                            <p-button label="Sign In" styleClass="w-full" routerLink="/"></p-button>
+                            <p-button label="Sign In" styleClass="w-full" (click)="login()"></p-button>
                         </div>
                     </div>
                 </div>
@@ -49,17 +49,17 @@ export class Login {
     constructor(private authService: AuthService, private router: Router) {}
 
     login() {
-        // this.authService.login(this.email, this.password).subscribe(
-        //     success => {
-        //         if (success) {
-        //             this.router.navigate(['/']);
-        //         } else {
-        //             // Handle login failure
-        //         }
-        //     },
-        //     error => {
-        //         // Handle error
-        //     }
-        // );
+        this.authService.login(this.email, this.password).subscribe(
+            success => {
+                if (success) {
+                    this.router.navigate(['/']);
+                } else {
+                    // Handle login failure
+                }
+            },
+            error => {
+                // Handle error
+            }
+        );
     }
 }

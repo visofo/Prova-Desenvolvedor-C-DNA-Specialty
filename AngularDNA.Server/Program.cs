@@ -1,6 +1,8 @@
 using AngularDNA.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using AngularDNA.Server.Helpers;
+using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +27,14 @@ builder.Services.AddAuthentication(x =>
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(key),
         ValidateIssuer = false,
-        ValidateAudience = false
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        LifetimeValidator = (notBefore, expires, securityToken, validationParameters) =>
+        {
+            var jwtToken = (JwtSecurityToken)securityToken;
+            var token = new JwtSecurityTokenHandler().WriteToken(jwtToken);
+            return expires != null && expires > DateTime.UtcNow && !TokenStore.IsTokenRevoked(token);
+        }
     };
 });
 

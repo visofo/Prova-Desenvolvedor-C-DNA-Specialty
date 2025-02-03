@@ -13,6 +13,7 @@ namespace AngularDNA.Server.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+//[Authorize]
 public class ProdutosController : ControllerBase
 {
     private readonly DataContext _context;

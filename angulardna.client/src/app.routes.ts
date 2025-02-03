@@ -10,27 +10,26 @@ import { OrderFormComponent } from './app/pages/orders/order-form/order-form.com
 import { OrderListComponent } from './app/pages/orders/order-list/order-list.component';
 import { ProductFormComponent } from './app/pages/products/product-form/product-form.component';
 import { ProductListComponent } from './app/pages/products/product-list/product-list.component';
+import { UserFormComponent } from './app/pages/users/user-form/user-form.component';
 import { UserListComponent } from './app/pages/users/user-list/user-list.component';
 
 export const appRoutes: Routes = [
     {
         path: '',
         component: AppLayout,
+        canActivate: [AuthGuard],
         children: [
-            // { path: '', component: Dashboard },
-            // { path: 'register', component: RegisterComponent },
-            { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-            { path: 'products', component: ProductListComponent, canActivate: [AuthGuard] },
-            { path: 'customers', component: CustomerListComponent, canActivate: [AuthGuard] },
-            { path: 'users', component: UserListComponent, canActivate: [AuthGuard] },
-            { path: 'customers/detail/:id', component: CustomerFormComponent, canActivate: [AuthGuard] },
-            { path: 'orders', component: OrderListComponent, canActivate: [AuthGuard] },
-            { path: 'orders/detail/:id', component: OrderFormComponent, canActivate: [AuthGuard] },
-            { path: 'orders/create', component: OrderFormComponent, canActivate: [AuthGuard] },
+            { path: 'dashboard', component: DashboardComponent },
+            { path: 'products', component: ProductListComponent },
+            { path: 'customers', component: CustomerListComponent },
+            { path: 'users', component: UserListComponent },
+            { path: 'customers/detail/:id', component: CustomerFormComponent },
+            { path: 'orders', component: OrderListComponent },
+            { path: 'orders/detail/:id', component: OrderFormComponent },
+            { path: 'orders/create', component: OrderFormComponent },
         ]
     },
     { path: 'landing', component: Landing },
-    // { path: 'notfound', component: Notfound },
     { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
-    { path: '**', redirectTo: '/notfound' }
+    { path: '**', redirectTo: 'login' }
 ];
