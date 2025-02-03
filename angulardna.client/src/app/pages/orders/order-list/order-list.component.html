@@ -30,14 +30,12 @@
         </ng-template>
         <ng-template pTemplate="body" let-order>
             <tr>
-                <td>{{ order.customer?.razaoSocial}}</td>
-                <td>{{ order.orderDate | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-                <td>{{ order.totalAmount | currency: 'BRL' }}</td>
+                <td>{{ order.cliente?.razaoSocial}}</td>
+                <td>{{ order.dataPedido | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                <td>{{ order.valorTotal | currency: 'BRL' }}</td>
                  <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
-                        (click)="editOrder(order)" title="Editar Pedido"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
-                        (click)="deleteOrder(order.id)" title="Excluir Pedido"></button>
+                    <i title="Editar Pedido" class="pi pi-pencil mr-2" style="color: green; font-size: 1rem; cursor: pointer;" (click)="editOrder(order)"></i>
+                    <i title="Excluir Pedido" class="pi pi-trash" style="color: red; font-size: 1rem; cursor: pointer;" (click)="deleteOrder(order.id)"></i>
                 </td>
             </tr>
         </ng-template>

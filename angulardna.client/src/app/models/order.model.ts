@@ -4,20 +4,20 @@ import { User } from "./user.model";
 
 export interface Order {
     id: number;
-    customerId: number;
-    customer?: Customer;
+    clienteId: number;
+    cliente?: Customer;
     orderDate: Date;
     userId: number;
     user?: User;
-    orderItems: OrderItem[];
+    itensPedido: OrderItem[];
     totalAmount: number;
 }
 
 export interface OrderItem {
     id: number;
     orderId: number;
-    productId: number;
-    product?: Product;
+    produtoId: number;
+    produto?: Product;
     quantidade: number;
     itemPrice: number;
 }

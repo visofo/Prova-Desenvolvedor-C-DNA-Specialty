@@ -47,10 +47,11 @@ export class OrderFormComponent implements OnInit {
     products: Product[] = [];
     order: Order = {
         id: 0,
-        customerId: 0,
+        clienteId: 0,
+        cliente: {} as Customer,
         orderDate: new Date(),
         userId: 1,
-        orderItems: [],
+        itensPedido: [],
         totalAmount: 0
     };
 
@@ -76,17 +77,17 @@ export class OrderFormComponent implements OnInit {
 
      patchForm(){
          this.orderForm.patchValue({
-            customerId: this.order.customerId
+            cliente: this.order.cliente
          })
-         this.order.orderItems.forEach(item => {
-            this.addItem(item.productId, item.quantidade)
+         this.order.itensPedido.forEach(item => {
+            this.addItem(item.produto, item.quantidade)
          });
     }
 
     buildForm() {
         this.orderForm = this.fb.group({
-            customerId: ['', Validators.required],
-            items: this.fb.array([])
+            cliente: ['', Validators.required],
+            itens: this.fb.array([])
         });
     }
 
@@ -114,29 +115,29 @@ export class OrderFormComponent implements OnInit {
         );
     }
 
-
-    addItem(productId: number | null = null, quantity: number = 0) {
-        const items = this.orderForm.get('items') as FormArray;
+    addItem(produto: Product | null = null, quantity: number = 0) {
+        const items = this.orderForm.get('itens') as FormArray;
         items.push(this.fb.group({
-            productId: [productId ? productId : null , Validators.required],
-            quantity: [quantity ? quantity : 0 , Validators.required]
+            produto: [produto ? produto : null , Validators.required],
+            quantidade: [quantity ? quantity : 0 , Validators.required]
         }));
 
     }
+    
     removeItem(index: number) {
-        const items = this.orderForm.get('items') as FormArray;
+        const items = this.orderForm.get('itens') as FormArray;
         items.removeAt(index);
     }
 
     calculateTotal() {
         let total = 0;
-        const items = this.orderForm.get('items')?.value;
+        const items = this.orderForm.get('itens')?.value;
 
         if (items) {
            items.forEach((item: any) => {
-                 const product = this.products.find(p => p.id == item.productId)
+                 const product = this.products.find(p => p.id == item.produto?.id)
                   if(product){
-                    total += product.preco * item.quantity
+                    total += product.preco * item.quantidade
                   }
                })
              this.order.totalAmount = total;
@@ -148,8 +149,18 @@ export class OrderFormComponent implements OnInit {
 
         if (this.orderForm.valid) {
             const formValue = this.orderForm.value;
-            this.order.customerId = formValue.customerId
-            this.order.orderItems = formValue.items;
+            this.order.clienteId = formValue.cliente.id;
+            formValue.itens.forEach((item: { produto: any; quantidade: any; preco: any; })=> {
+                this.order.itensPedido.push({
+                    id: 0,
+                    orderId: 0,
+                    produtoId: item.produto.id,
+                    quantidade: item.quantidade,
+                    itemPrice: item.preco
+            });
+        });
+
+            //this.order.itens = formValue.itens;
            this.orderService.createOrder(this.order).subscribe(
                 () => {
                     this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Pedido criado com sucesso.' });
@@ -171,6 +182,6 @@ export class OrderFormComponent implements OnInit {
     }
 
     get itemsControls() {
-      return (this.orderForm.get('items') as FormArray)?.controls || [];
+      return (this.orderForm.get('itens') as FormArray)?.controls || [];
   }
 }
