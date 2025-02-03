@@ -51,7 +51,7 @@ export class ProductFormComponent implements OnInit {
     ngOnInit(): void {
 
         this.productForm = this.fb.group({
-            id: [],
+            id: [0],
             nome: ['', Validators.required],
             preco: [0, Validators.required]
         });
@@ -75,6 +75,7 @@ export class ProductFormComponent implements OnInit {
             const product = this.productForm.value;
 
             if (this.isNew) {
+                product.id = 0;
                 this.productService.createProduct(product).subscribe(
                     () => {
                         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Produto criado com sucesso.' });
@@ -102,7 +103,7 @@ export class ProductFormComponent implements OnInit {
         }
 
     }
-    
+
     closeDialog() {
           this.ref.close();
     }

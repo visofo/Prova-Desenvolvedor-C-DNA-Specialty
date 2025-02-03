@@ -18,6 +18,6 @@ export interface OrderItem {
     orderId: number;
     productId: number;
     product?: Product;
-    quantity: number;
+    quantidade: number;
     itemPrice: number;
 }

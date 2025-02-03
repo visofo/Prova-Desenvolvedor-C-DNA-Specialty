@@ -16,7 +16,8 @@ public class Usuario
 
     [Required(ErrorMessage = "O Login do Usuário é obrigatório.")]
     public string Login { get; set; }
-    [JsonIgnore]
+
+    //[JsonIgnore]
     [Required(ErrorMessage = "A Senha do Usuário é obrigatória.")]
     public string Senha { get; set; }
 }

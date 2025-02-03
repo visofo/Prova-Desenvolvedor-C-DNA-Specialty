@@ -1,0 +1,32 @@
+<p-confirmDialog></p-confirmDialog>
+<p-toast />
+
+<div class="card">
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <button title="Novo" pButton label="Novo Usuário" icon="pi pi-plus" class="p-button-success" (click)="newUser()"></button>
+        </div>
+    </p-toolbar>
+
+    <p-table [value]="users" [paginator]="true" [rows]="10" [responsive]="true">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Login</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+            <tr>
+                <td>{{ user.nome }}</td>
+                <td>{{ user.cpf }}</td>
+                <td>{{ user.login }}</td>
+                <td>
+                    <i title="Editar Usuário" class="pi pi-pencil mr-2" style="color: green; font-size: 1rem; cursor: pointer;" (click)="editUser(user)"></i>
+                    <i title="Excluir Usuário" class="pi pi-trash" style="color: red; font-size: 1rem; cursor: pointer;" (click)="deleteUser($event, user.id)"></i>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

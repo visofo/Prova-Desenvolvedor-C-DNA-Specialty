@@ -79,16 +79,16 @@ export class OrderFormComponent implements OnInit {
             customerId: this.order.customerId
          })
          this.order.orderItems.forEach(item => {
-            this.addItem(item.productId, item.quantity)
+            this.addItem(item.productId, item.quantidade)
          });
     }
+
     buildForm() {
         this.orderForm = this.fb.group({
             customerId: ['', Validators.required],
             items: this.fb.array([])
         });
     }
-
 
     loadCustomers() {
         this.customerService.getCustomers().subscribe(

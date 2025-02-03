@@ -11,6 +11,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using AngularDNA.Server.DTOs;
 
 namespace AngularDNA.Server.Controllers;
 
@@ -137,25 +138,25 @@ public class UsuarioController : ControllerBase
         }
     }
 
-    [HttpPost("login")]
-    public async Task<ActionResult> Login([FromBody] Usuario usuario)
-    {
-        try
-        {
-            var userLogado = await _context.Usuarios.FirstOrDefaultAsync(p => p.Login == usuario.Login && p.Senha == usuario.Senha);
+    //[HttpPost]
+    //public async Task<ActionResult> Login([FromBody] Usuario usuario)
+    //{
+    //    try
+    //    {
+    //        var userLogado = await _context.Usuarios.FirstOrDefaultAsync(p => p.Login == usuario.Login && p.Senha == usuario.Senha);
 
-            if (userLogado == null)
-                return BadRequest("Login ou senha inválidos!");
+    //        if (userLogado == null)
+    //            return BadRequest("Login ou senha inválidos!");
 
-            var token = GerarToken(userLogado);
-            return Ok(new { token = token });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+    //        var token = GerarToken(userLogado);
+    //        return Ok(new { token = token });
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        return BadRequest(ex.Message);
+    //    }
 
-    }
+    //}
 
 
     private string GerarToken(Usuario usuario)

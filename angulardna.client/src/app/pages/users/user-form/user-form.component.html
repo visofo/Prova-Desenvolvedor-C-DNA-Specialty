@@ -1,0 +1,50 @@
+<form [formGroup]="userForm">
+    <p-fluid>
+        <div class="card flex flex-col gap-4">
+            <input type="hidden" formControlName="id">
+
+            <div class="flex flex-col gap-2">
+                <label for="nome">Nome do Usuário</label>
+                <input id="nome" type="text" pInputText formControlName="nome" class="flex-auto" autocomplete="off" />
+                <small class="p-error"
+                    *ngIf="userForm.get('nome')?.hasError('required') && userForm.get('nome')?.touched">
+                    O nome do usuário é obrigatório.
+                </small>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label for="cpf">CPF</label>
+                <input id="cpf" type="text" pInputText formControlName="cpf" class="flex-auto" autocomplete="off" />
+                <small class="p-error"
+                    *ngIf="userForm.get('cpf')?.hasError('required') && userForm.get('cpf')?.touched">
+                    O CPF é obrigatório.
+                </small>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label for="login">Login</label>
+                <input id="login" type="text" pInputText formControlName="login" class="flex-auto" autocomplete="off" />
+                <small class="p-error"
+                    *ngIf="userForm.get('login')?.hasError('required') && userForm.get('login')?.touched">
+                    O login é obrigatório.
+                </small>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label for="senha">Senha</label>
+                <input id="senha" type="password" pInputText formControlName="senha" class="flex-auto" autocomplete="off" />
+                <small class="p-error"
+                    *ngIf="userForm.get('senha')?.hasError('required') && userForm.get('senha')?.touched">
+                    A senha é obrigatória.
+                </small>
+            </div>
+
+            <div class="flex items-start gap-2">
+                <button title="Salvar" pButton pRipple type="button" label="Salvar" icon="pi pi-check"
+                    class="p-button-success mr-2" (click)="saveUser()"></button>
+                <button title="Cancelar" pButton pRipple type="button" label="Cancelar" icon="pi pi-times"
+                    class="p-button-secondary" (click)="closeDialog()"></button>
+            </div>
+        </div>
+    </p-fluid>
+</form>

@@ -16,7 +16,7 @@
                 <div *ngFor="let itemForm of itemsControls; let i = index" [formGroupName]="i" class="flex flex-col gap-2 border-y border-gray-200 py-2">
                       <div class="flex gap-2 items-center">
                         <label for="product" class="font-semibold w-24">Produto {{i + 1}}</label>
-                        <p-dropdown [options]="products" optionLabel="name" [filter]="true" filterBy="name"
+                        <p-dropdown [options]="products" optionLabel="nome" [filter]="true" filterBy="nome"
                             placeholder="Selecione um produto" id="product" formControlName="productId" class="flex-auto" autocomplete="off"></p-dropdown>
                              <small class="p-error"
                                 *ngIf="itemForm.get('productId')?.hasError('required') && itemForm.get('productId')?.touched">
@@ -26,11 +26,11 @@
                             (click)="removeItem(i)" title="Excluir produto"></button>
                     </div>
                       <div class="flex gap-2 items-center">
-                         <label for="quantity" class="font-semibold w-24">Quantidade</label>
-                        <p-inputNumber inputId="quantity" formControlName="quantity"
+                         <label for="quantidade" class="font-semibold w-24">Quantidade</label>
+                        <p-inputNumber inputId="quantidade" formControlName="quantidade"
                             class="flex-auto" autocomplete="off"></p-inputNumber>
                             <small class="p-error"
-                                *ngIf="itemForm.get('quantity')?.hasError('required') && itemForm.get('quantity')?.touched">
+                                *ngIf="itemForm.get('quantidade')?.hasError('required') && itemForm.get('quantidade')?.touched">
                             Informe a quantidade.
                             </small>
                      </div>

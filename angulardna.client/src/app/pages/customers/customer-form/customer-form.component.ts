@@ -48,6 +48,7 @@ export class CustomerFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerForm = this.fb.group({
+      id: [0],
       cnpj: ['', Validators.required],
       razaoSocial: ['', Validators.required]
     });
@@ -71,6 +72,7 @@ export class CustomerFormComponent implements OnInit {
       const customer = this.customerForm.value;
 
       if (this.isNew) {
+        customer.id = 0;
         this.customerService.createCustomer(customer).subscribe(
           () => {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Cliente criado com sucesso.' });
