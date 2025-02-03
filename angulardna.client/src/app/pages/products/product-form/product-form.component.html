@@ -1,0 +1,37 @@
+<form [formGroup]="productForm">
+    <p-fluid>
+        <div class="card flex flex-col gap-4">
+           <!-- Campo oculto para o ID do produto -->
+           <input type="hidden" formControlName="id">
+
+            <div class="flex flex-col gap-2">
+                <label for="nome">Nome do Produto</label>
+                <input id="nome" type="text" pInputText formControlName="nome" class="flex-auto" autocomplete="off" />
+                <small class="p-error"
+                    *ngIf="productForm.get('nome')?.hasError('required') && productForm.get('nome')?.touched">
+                    O nome do produto é obrigatório.
+                </small>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label for="preco" class="font-semibold w-24">Preço</label>
+                <p-inputNumber inputId="preco" mode="currency" currency="BRL" locale="pt-BR" formControlName="preco"
+                    class="flex-auto" autocomplete="off"></p-inputNumber>
+                <small class="p-error"
+                    *ngIf="productForm.get('preco')?.hasError('required') && productForm.get('preco')?.touched">
+                    O preço do produto é obrigatório.
+                </small>
+            </div>
+
+
+            <div class="flex items-start gap-2">
+                <button title="Salvar" pButton pRipple type="button" label="Salvar" icon="pi pi-check"
+                    class="p-button-success mr-2" (click)="saveProduct()"></button>
+                <button title="Cancelar" pButton pRipple type="button" label="Cancelar" icon="pi pi-times"
+                    class="p-button-secondary" (click)="closeDialog()"></button>
+            </div>
+        </div>
+    </p-fluid>
+</form>
+
+<p-toast></p-toast>

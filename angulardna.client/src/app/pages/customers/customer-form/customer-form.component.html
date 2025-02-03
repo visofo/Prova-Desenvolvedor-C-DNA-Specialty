@@ -1,0 +1,28 @@
+<form [formGroup]="customerForm">
+    <p-fluid>
+        <div class="card flex flex-col gap-4">
+            <div class="flex flex-col gap-2">
+                <label for="cnpj">CNPJ</label>
+                <input id="cnpj" type="text" pInputText formControlName="cnpj" class="flex-auto" autocomplete="off" />
+                <small class="p-error" *ngIf="customerForm.get('cnpj')?.hasError('required') && customerForm.get('cnpj')?.touched">
+                    O CNPJ é obrigatório.
+                </small>
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="razaoSocial">Razão Social</label>
+                <input id="razaoSocial" type="text" pInputText formControlName="razaoSocial" class="flex-auto" autocomplete="off" />
+                 <small class="p-error" *ngIf="customerForm.get('razaoSocial')?.hasError('required') && customerForm.get('razaoSocial')?.touched">
+                    A Razão Social é obrigatória.
+                </small>
+            </div>
+            <div class="flex items-start gap-2">
+                 <button title="Salvar" pButton pRipple type="button" label="Salvar" icon="pi pi-check"
+                    class="p-button-success mr-2" (click)="saveCustomer()"></button>
+                <button title="Cancelar" pButton pRipple type="button" label="Cancelar" icon="pi pi-times"
+                    class="p-button-secondary" (click)="closeDialog()"></button>
+            </div>
+        </div>
+    </p-fluid>
+</form>
+
+<p-toast></p-toast>

@@ -1,0 +1,55 @@
+<form [formGroup]="orderForm">
+    <p-fluid>
+        <div class="card flex flex-col gap-4">
+            <div class="flex flex-col gap-2">
+                <label for="customer">Cliente</label>
+                <p-dropdown [options]="customers" optionLabel="razaoSocial" [filter]="true" filterBy="razaoSocial"
+                    placeholder="Selecione um cliente" id="customer" formControlName="customerId"
+                    class="flex-auto" autocomplete="off"></p-dropdown>
+                    <small class="p-error"
+                    *ngIf="orderForm.get('customerId')?.hasError('required') && orderForm.get('customerId')?.touched">
+                   Selecione um cliente.
+                    </small>
+            </div>
+
+            <div formArrayName="items">
+                <div *ngFor="let itemForm of itemsControls; let i = index" [formGroupName]="i" class="flex flex-col gap-2 border-y border-gray-200 py-2">
+                      <div class="flex gap-2 items-center">
+                        <label for="product" class="font-semibold w-24">Produto {{i + 1}}</label>
+                        <p-dropdown [options]="products" optionLabel="name" [filter]="true" filterBy="name"
+                            placeholder="Selecione um produto" id="product" formControlName="productId" class="flex-auto" autocomplete="off"></p-dropdown>
+                             <small class="p-error"
+                                *ngIf="itemForm.get('productId')?.hasError('required') && itemForm.get('productId')?.touched">
+                             Selecione um produto.
+                                </small>
+                         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                            (click)="removeItem(i)" title="Excluir produto"></button>
+                    </div>
+                      <div class="flex gap-2 items-center">
+                         <label for="quantity" class="font-semibold w-24">Quantidade</label>
+                        <p-inputNumber inputId="quantity" formControlName="quantity"
+                            class="flex-auto" autocomplete="off"></p-inputNumber>
+                            <small class="p-error"
+                                *ngIf="itemForm.get('quantity')?.hasError('required') && itemForm.get('quantity')?.touched">
+                            Informe a quantidade.
+                            </small>
+                     </div>
+                </div>
+            <button pButton pRipple type="button" label="Adicionar Produto" icon="pi pi-plus"
+                class="p-button-secondary mt-2" (click)="addItem()" title="Adicionar Produto"></button>
+        </div>
+
+            <div class="flex items-start gap-2 mt-2">
+                  <span>Total do Pedido: {{calculateTotal() | currency: 'BRL'}}</span>
+            </div>
+
+             <div class="flex items-start gap-2">
+                    <button pButton pRipple type="button" label="Salvar Pedido" icon="pi pi-check"
+                         class="p-button-success mr-2" (click)="saveOrder()" title="Salvar Pedido"></button>
+                    <button pButton pRipple type="button" label="Cancelar" icon="pi pi-times"
+                         class="p-button-secondary" (click)="closeDialog()" title="Cancelar"></button>
+                </div>
+        </div>
+    </p-fluid>
+</form>
+<p-toast></p-toast>

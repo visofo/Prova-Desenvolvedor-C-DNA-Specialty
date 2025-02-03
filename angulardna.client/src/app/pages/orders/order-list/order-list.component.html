@@ -1,0 +1,50 @@
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="newOrder()" title="Novo Pedido"></button>
+        </ng-template>
+        <ng-template pTemplate="right">
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="orders" responsiveLayout="scroll" [loading]="loading" [paginator]="true" [rows]="10"
+         >
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                Lista de Pedidos
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Pesquisar..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Cliente</th>
+                <th>Data do Pedido</th>
+                <th>Total</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+            <tr>
+                <td>{{ order.customer?.razaoSocial}}</td>
+                <td>{{ order.orderDate | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+                <td>{{ order.totalAmount | currency: 'BRL' }}</td>
+                 <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
+                        (click)="editOrder(order)" title="Editar Pedido"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                        (click)="deleteOrder(order.id)" title="Excluir Pedido"></button>
+                </td>
+            </tr>
+        </ng-template>
+           <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3">Nenhum pedido encontrado.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

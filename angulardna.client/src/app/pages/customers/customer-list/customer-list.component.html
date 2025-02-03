@@ -1,0 +1,48 @@
+<p-confirmDialog></p-confirmDialog>
+<p-toast />
+<div class="card">
+    <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"
+                (click)="newCustomer()" title="Novo Cliente"></button>
+        </ng-template>
+        <ng-template pTemplate="right">
+        </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="customers" responsiveLayout="scroll" [loading]="loading" [paginator]="true" [rows]="10"
+        [globalFilterFields]="['cnpj','razaoSocial']">
+        <ng-template pTemplate="caption">
+            <div class="flex align-items-center justify-content-between">
+                Lista de Clientes
+                <span class="p-input-icon-left ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Pesquisar..." />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>CNPJ</th>
+                <th>Razão Social</th>
+                <th>Ações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr>
+                <td>{{ customer.cnpj }}</td>
+                <td>{{ customer.razaoSocial }}</td>
+                <td>
+                    <i title="Editar Cliente" class="pi pi-pencil mr-2" style="color: green; font-size: 1rem; cursor: pointer;" (click)="editCustomer(customer)"></i>
+                    <i title="Excluir Cliente" class="pi pi-trash" style="color: red; font-size: 1rem; cursor: pointer;" (click)="deleteCustomer($event, customer.id)"></i>
+                </td>
+            </tr>
+        </ng-template>
+           <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3">Nenhum cliente encontrado.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
