@@ -1,4 +1,5 @@
 ﻿using AngularDNA.Server.Data;
+using AngularDNA.Server.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,11 +20,14 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var usuario = await _context.Usuarios
-            .FirstOrDefaultAsync(u => u.Login == request.Login && u.Senha == request.Senha);
+            .FirstOrDefaultAsync(u => u.Login == request.Login);
 
-        return usuario == null
-            ? Unauthorized("Credenciais inválidas")
-            : Ok(new { usuario.Id, usuario.Nome });
+        if (usuario == null || !PasswordHelper.VerifyPassword(request.Senha, usuario.Senha))
+        {
+            return Unauthorized("Credenciais inválidas");
+        }
+
+        return Ok(new { usuario.Id, usuario.Nome });
     }
 }
 
