@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AngularDNA.Server.Helpers;
 using System.IdentityModel.Tokens.Jwt;
+using AngularDNA.Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -72,7 +73,27 @@ using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
     dataContext.Database.Migrate();
+
+    SeedData(dataContext);
 }
 
 app.Run();
+
+
+void SeedData(DataContext context)
+{
+    if (!context.Usuarios.Any())
+    {
+        var defaultUser = new Usuario
+        {
+            Nome = "Administrator",
+            CPF = "000.000.000-00",
+            Login = "admin",
+            Senha = PasswordHelper.HashPassword("admin123") 
+        };
+
+        context.Usuarios.Add(defaultUser);
+        context.SaveChanges();
+    }
+}
 
