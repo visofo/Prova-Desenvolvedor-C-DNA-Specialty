@@ -1,48 +1,49 @@
 <div class="card">
-    <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
-            <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"
-                (click)="newOrder()" title="Novo Pedido"></button>
-        </ng-template>
-        <ng-template pTemplate="right">
-        </ng-template>
-    </p-toolbar>
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="Novo" icon="pi pi-plus" class="p-button-success mr-2"
+              (click)="newOrder()" title="Novo Pedido"></button>
+    </ng-template>
+    <ng-template pTemplate="right">
+    </ng-template>
+  </p-toolbar>
 
-    <p-table #dt [value]="orders" responsiveLayout="scroll" [loading]="loading" [paginator]="true" [rows]="10"
-         >
-        <ng-template pTemplate="caption">
-            <div class="flex align-items-center justify-content-between">
-                Lista de Pedidos
-                <span class="p-input-icon-left ml-auto">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                        placeholder="Pesquisar..." />
-                </span>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Cliente</th>
-                <th>Data do Pedido</th>
-                <th>Total</th>
-                <th>Ações</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-order>
-            <tr>
-                <td>{{ order.cliente?.razaoSocial}}</td>
-                <td>{{ order.dataPedido | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-                <td>{{ order.valorTotal | currency: 'BRL' }}</td>
-                 <td>
-                    <i title="Editar Pedido" class="pi pi-pencil mr-2" style="color: green; font-size: 1rem; cursor: pointer;" (click)="editOrder(order)"></i>
-                    <i title="Excluir Pedido" class="pi pi-trash" style="color: red; font-size: 1rem; cursor: pointer;" (click)="deleteOrder(order.id)"></i>
-                </td>
-            </tr>
-        </ng-template>
-           <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="3">Nenhum pedido encontrado.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+  <p-table #dt [value]="orders" responsiveLayout="scroll" [loading]="loading" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        Lista de Pedidos
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                 placeholder="Pesquisar..." />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Cliente</th>
+        <th>Data do Pedido</th>
+        <th>Total</th>
+        <th>Usuário</th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-order>
+      <tr>
+        <td>{{ order.cliente?.razaoSocial }}</td>
+        <td>{{ order.dataPedido | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+        <td>{{ order.valorTotal | currency: 'BRL' }}</td>
+        <td>{{ order.usuario?.nome }}</td>
+        <td>
+          <i title="Editar Pedido" class="pi pi-pencil mr-2" style="color: green; font-size: 1rem; cursor: pointer;" (click)="editOrder(order)"></i>
+          <i title="Excluir Pedido" class="pi pi-trash" style="color: red; font-size: 1rem; cursor: pointer;" (click)="deleteOrder(order.id)"></i>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">Nenhum pedido encontrado.</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
