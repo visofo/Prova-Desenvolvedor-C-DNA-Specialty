@@ -24,10 +24,10 @@ export class AppMenu {
                 label: 'Menu',
                 items: [
                     { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] },
-                { label: 'Produtos', icon: 'pi pi-fw pi-home', routerLink: ['/products'] },
-                { label: 'Clientes', icon: 'pi pi-fw pi-home', routerLink: ['/customers'] },
-                { label: 'Usuarios', icon: 'pi pi-fw pi-home', routerLink: ['/users'] },
-                { label: 'Pedidos', icon: 'pi pi-fw pi-home', routerLink: ['/orders'] }
+                { label: 'Produtos', icon: 'pi pi-fw pi-box', routerLink: ['/products'] },
+                { label: 'Clientes', icon: 'pi pi-fw pi-id-card', routerLink: ['/customers'] },
+                { label: 'Usuarios', icon: 'pi pi-fw pi-address-book', routerLink: ['/users'] },
+                { label: 'Pedidos', icon: 'pi pi-fw pi-cart-plus', routerLink: ['/orders'] }
                 ]
             },
           

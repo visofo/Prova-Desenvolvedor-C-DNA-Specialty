@@ -12,6 +12,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using AngularDNA.Server.DTOs;
+using AngularDNA.Server.Helpers;
 
 namespace AngularDNA.Server.Controllers;
 
@@ -68,6 +69,7 @@ public class UsuarioController : ControllerBase
     {
         try
         {
+            usuario.Senha = PasswordHelper.HashPassword(usuario.Senha);
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
@@ -89,6 +91,7 @@ public class UsuarioController : ControllerBase
             {
                 return BadRequest();
             }
+            usuario.Senha = PasswordHelper.HashPassword(usuario.Senha);
 
             _context.Entry(usuario).State = EntityState.Modified;
 

@@ -1,4 +1,4 @@
-# Prova - Desenvolvedor C# DNA Specialty
+﻿# Prova - Desenvolvedor C# DNA Specialty
 
 ## Descrição
 
@@ -186,7 +186,6 @@ AngularDNA/
 Este projeto está licenciado sob a licença **MIT**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## Contato
-
 
 Para mais informações, entre em contato via e-mail: [visofo@gmail.com](mailto\:visofo@gmail.com).
 
