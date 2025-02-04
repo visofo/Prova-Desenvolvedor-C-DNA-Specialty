@@ -187,5 +187,6 @@ Este projeto está licenciado sob a licença **MIT**. Veja o arquivo [LICENSE](L
 
 ## Contato
 
+
 Para mais informações, entre em contato via e-mail: [visofo@gmail.com](mailto\:visofo@gmail.com).
 
